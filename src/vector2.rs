@@ -145,7 +145,7 @@ mod tests {
     }
 
     #[test]
-    fn move_towards_diagonal_target_according_to_pythagorean_triple_moves_to_target_position() {
+    fn move_towards_diagonal_target_moves_to_target_position() {
         let start = Vector2 { x: 0.0, y: 0.0 };
         let target = Vector2 { x: 3.0, y: 4.0 };
 
