@@ -4,9 +4,10 @@ extern crate opengl_graphics;
 extern crate piston;
 
 mod player;
-mod vector2;
 mod settings;
+mod vector2;
 
+use crate::settings::color;
 use glutin_window::GlutinWindow as Window;
 use graphics::clear;
 use opengl_graphics::{GlGraphics, OpenGL};
@@ -17,7 +18,6 @@ use piston::Button::Keyboard;
 use piston_window::PressEvent;
 use player::{Action, KeyState, Player, State};
 use vector2::Vector2;
-use crate::settings::color;
 
 fn main() {
     let (width, height) = settings::window::SIZE;

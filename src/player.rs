@@ -1,10 +1,10 @@
 extern crate piston_window;
 
-use crate::vector2::Vector2;
 use crate::settings;
+use crate::settings::{color, player};
+use crate::vector2::Vector2;
 use opengl_graphics::GlGraphics;
 use piston_window::*;
-use crate::settings::{player, color};
 
 #[derive(Clone, Copy)]
 pub enum KeyState {
