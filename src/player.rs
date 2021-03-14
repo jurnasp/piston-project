@@ -1,5 +1,7 @@
 extern crate piston_window;
 
+use crate::player::Action::NoMove;
+use crate::player::State::Active;
 use crate::settings;
 use crate::settings::{color, player};
 use crate::vector2::Vector2;
@@ -12,29 +14,35 @@ pub enum KeyState {
     NotPressed,
 }
 
-pub enum Action {
+enum Action {
     NoMove,
     Plus,
     Minus,
 }
 
 #[allow(dead_code)]
-pub enum State {
+enum State {
     Active(Action),
     Dead,
 }
 
 pub struct Player {
     pub position: Vector2,
-    pub horizontal: State,
-    pub vertical: State,
+    horizontal: State,
+    vertical: State,
 }
 
 impl Player {
+    pub fn new(position: Vector2) -> Self {
+        Player {
+            position,
+            horizontal: Active(NoMove),
+            vertical: Active(NoMove),
+        }
+    }
+
     pub fn update(&mut self, dt: f64) {
-        let mut target = Vector2 {
-            ..Default::default()
-        };
+        let mut target = Vector2::new(0.0, 0.0);
         match &self.horizontal {
             State::Active(action) => match action {
                 Action::Minus => target.x = self.position.x - player::SPEED * dt,

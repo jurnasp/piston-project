@@ -16,7 +16,7 @@ use piston::input::{Key, ReleaseEvent, RenderEvent, UpdateEvent};
 use piston::window::WindowSettings;
 use piston::Button::Keyboard;
 use piston_window::PressEvent;
-use player::{Action, KeyState, Player, State};
+use player::{KeyState, Player};
 use vector2::Vector2;
 
 fn main() {
@@ -33,14 +33,7 @@ fn main() {
 
     // Create a new game and run it.
     let mut gl = GlGraphics::new(opengl);
-    let mut player = Player {
-        position: Vector2 {
-            x: width as f64 / 2.0,
-            y: height as f64 / 2.0,
-        },
-        horizontal: State::Active(Action::NoMove),
-        vertical: State::Active(Action::NoMove),
-    };
+    let mut player = Player::new(Vector2::new(width as f64 / 2.0, height as f64 / 2.0));
 
     // Key state
     let mut up_key = KeyState::NotPressed;

@@ -8,6 +8,10 @@ pub struct Vector2 {
 }
 
 impl Vector2 {
+    pub fn new(x: f64, y: f64) -> Self {
+        Vector2 { x, y }
+    }
+
     pub fn move_towards(position: Self, target: Self, max_distance_delta: f64) -> Self {
         let position_diff = target - position;
         let magnitude = position_diff.magnitude();
@@ -96,78 +100,78 @@ mod tests {
 
     #[test]
     fn move_towards_horizontal_target_position_moves_to_target_position() {
-        let start = Vector2 { x: 0.0, y: 0.0 };
-        let target = Vector2 { x: 1.0, y: 0.0 };
+        let start = Vector2::new(0.0, 0.0);
+        let target = Vector2::new(1.0, 0.0);
 
         let result = Vector2::move_towards(start, target, 2.0);
 
-        assert_eq!(result, Vector2 { x: 1.0, y: 0.0 });
+        assert_eq!(result, Vector2::new(1.0, 0.0));
     }
 
     #[test]
     fn move_towards_horizontal_capped_by_max_distance_delta_moves_to_max_distance_delta() {
-        let start = Vector2 { x: 0.0, y: 0.0 };
-        let target = Vector2 { x: 1.0, y: 0.0 };
+        let start = Vector2::new(0.0, 0.0);
+        let target = Vector2::new(1.0, 0.0);
 
         let result = Vector2::move_towards(start, target, 0.5);
 
-        assert_eq!(result, Vector2 { x: 0.5, y: 0.0 });
+        assert_eq!(result, Vector2::new(0.5, 0.0));
     }
 
     #[test]
     fn move_towards_vertical_target_position_moves_to_target_position() {
-        let start = Vector2 { x: 0.0, y: 0.0 };
-        let target = Vector2 { x: 0.0, y: 1.0 };
+        let start = Vector2::new(0.0, 0.0);
+        let target = Vector2::new(0.0, 1.0);
 
         let result = Vector2::move_towards(start, target, 2.0);
 
-        assert_eq!(result, Vector2 { x: 0.0, y: 1.0 });
+        assert_eq!(result, Vector2::new(0.0, 1.0));
     }
 
     #[test]
     fn move_towards_vertical_capped_by_max_distance_delta_moves_to_max_distance_delta() {
-        let start = Vector2 { x: 0.0, y: 0.0 };
-        let target = Vector2 { x: 0.0, y: 1.0 };
+        let start = Vector2::new(0.0, 0.0);
+        let target = Vector2::new(0.0, 1.0);
 
         let result = Vector2::move_towards(start, target, 0.5);
 
-        assert_eq!(result, Vector2 { x: 0.0, y: 0.5 });
+        assert_eq!(result, Vector2::new(0.0, 0.5));
     }
 
     #[test]
     fn move_towards_diagonal_target_position_moves_to_target_position() {
-        let start = Vector2 { x: 0.0, y: 0.0 };
-        let target = Vector2 { x: 1.0, y: 1.0 };
+        let start = Vector2::new(0.0, 0.0);
+        let target = Vector2::new(1.0, 1.0);
 
         let result = Vector2::move_towards(start, target, 2.0);
 
-        assert_eq!(result, Vector2 { x: 1.0, y: 1.0 });
+        assert_eq!(result, Vector2::new(1.0, 1.0));
     }
 
     #[test]
     fn move_towards_diagonal_target_moves_to_target_position() {
-        let start = Vector2 { x: 0.0, y: 0.0 };
-        let target = Vector2 { x: 3.0, y: 4.0 };
+        let start = Vector2::new(0.0, 0.0);
+        let target = Vector2::new(3.0, 4.0);
 
         let end = Vector2::move_towards(start, target, 5.0);
 
-        assert_eq!(end, Vector2 { x: 3.0, y: 4.0 });
+        assert_eq!(end, Vector2::new(3.0, 4.0));
     }
 
     #[test]
     fn move_towards_diagonal_target_capped_by_max_distance_delta_moves_to_max_distance_delta() {
-        let start = Vector2 { x: 0.0, y: 0.0 };
-        let target = Vector2 { x: 30.0, y: 40.0 };
+        let start = Vector2::new(0.0, 0.0);
+        let target = Vector2::new(30.0, 40.0);
 
         let end = Vector2::move_towards(start, target, 5.0);
 
-        assert_eq!(end, Vector2 { x: 3.0, y: 4.0 });
+        assert_eq!(end, Vector2::new(3.0, 4.0));
     }
 
     #[test]
     fn partial_eq_position_by_equal_position() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
-        let equal_position = Vector2 { x: 2.0, y: 2.0 };
+        let position = Vector2::new(2.0, 2.0);
+        let equal_position = Vector2::new(2.0, 2.0);
 
         let result = position == equal_position;
 
@@ -176,8 +180,8 @@ mod tests {
 
     #[test]
     fn partial_eq_position_by_non_equal_position() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
-        let non_equal_position = Vector2 { x: 0.0, y: 0.0 };
+        let position = Vector2::new(2.0, 2.0);
+        let non_equal_position = Vector2::new(0.0, 0.0);
 
         let result = position == non_equal_position;
 
@@ -186,81 +190,81 @@ mod tests {
 
     #[test]
     fn div_position_by_pos_f64() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
+        let position = Vector2::new(2.0, 2.0);
         let pos_f64 = 2.0;
 
         let result = position / pos_f64;
 
-        assert_eq!(result, Vector2 { x: 1.0, y: 1.0 });
+        assert_eq!(result, Vector2::new(1.0, 1.0));
     }
 
     #[test]
     fn div_position_by_pos_position() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
-        let pos_position = Vector2 { x: 2.0, y: 2.0 };
+        let position = Vector2::new(2.0, 2.0);
+        let pos_position = Vector2::new(2.0, 2.0);
 
         let result = position / pos_position;
 
-        assert_eq!(result, Vector2 { x: 1.0, y: 1.0 });
+        assert_eq!(result, Vector2::new(1.0, 1.0));
     }
 
     #[test]
     fn mul_position_by_pos_f64() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
+        let position = Vector2::new(2.0, 2.0);
         let pos_f64 = 2.0;
 
         let result = position * pos_f64;
 
-        assert_eq!(result, Vector2 { x: 4.0, y: 4.0 });
+        assert_eq!(result, Vector2::new(4.0, 4.0));
     }
 
     #[test]
     fn mul_position_by_pos_position() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
-        let pos_position = Vector2 { x: 2.0, y: 2.0 };
+        let position = Vector2::new(2.0, 2.0);
+        let pos_position = Vector2::new(2.0, 2.0);
 
         let result = position * pos_position;
 
-        assert_eq!(result, Vector2 { x: 4.0, y: 4.0 });
+        assert_eq!(result, Vector2::new(4.0, 4.0));
     }
 
     #[test]
     fn sub_position_with_pos_position() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
-        let pos_position = Vector2 { x: 2.0, y: 2.0 };
+        let position = Vector2::new(2.0, 2.0);
+        let pos_position = Vector2::new(2.0, 2.0);
 
         let result = position - pos_position;
 
-        assert_eq!(result, Vector2 { x: 0.0, y: 0.0 });
+        assert_eq!(result, Vector2::new(0.0, 0.0));
     }
 
     #[test]
     fn sub_position_with_neg_position() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
-        let negative_position = Vector2 { x: -2.0, y: -2.0 };
+        let position = Vector2::new(2.0, 2.0);
+        let neg_position = Vector2::new(-2.0, -2.0);
 
-        let result = position - negative_position;
+        let result = position - neg_position;
 
-        assert_eq!(result, Vector2 { x: 4.0, y: 4.0 });
+        assert_eq!(result, Vector2::new(4.0, 4.0));
     }
 
     #[test]
     fn add_position_to_pos_position() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
-        let pos_position = Vector2 { x: 2.0, y: 2.0 };
+        let position = Vector2::new(2.0, 2.0);
+        let pos_position = Vector2::new(2.0, 2.0);
 
         let result = position + pos_position;
 
-        assert_eq!(result, Vector2 { x: 4.0, y: 4.0 });
+        assert_eq!(result, Vector2::new(4.0, 4.0));
     }
 
     #[test]
     fn add_position_to_neg_position() {
-        let position = Vector2 { x: 2.0, y: 2.0 };
-        let neg_position = Vector2 { x: -2.0, y: -2.0 };
+        let position = Vector2::new(2.0, 2.0);
+        let neg_position = Vector2::new(-2.0, -2.0);
 
         let result = position + neg_position;
 
-        assert_eq!(result, Vector2 { x: 0.0, y: 0.0 });
+        assert_eq!(result, Vector2::new(0.0, 0.0));
     }
 }
