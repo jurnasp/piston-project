@@ -23,7 +23,7 @@ impl Vector2 {
         position_diff / magnitude * max_distance_delta + position
     }
 
-    fn magnitude(self: Self) -> f64 {
+    pub(crate) fn magnitude(self: Self) -> f64 {
         (self.x * self.x + self.y * self.y).sqrt()
     }
 }
@@ -36,61 +36,61 @@ impl PartialEq for Vector2 {
 
 impl Div<f64> for Vector2 {
     type Output = Self;
-    fn div(self, a: f64) -> Self {
-        let x = self.x / a;
-        let y = self.y / a;
-
-        Vector2 { x, y }
+    fn div(self, other: f64) -> Self {
+        Vector2 {
+            x: self.x / other,
+            y: self.y / other,
+        }
     }
 }
 
 impl Div<Vector2> for Vector2 {
     type Output = Self;
-    fn div(self, a: Self) -> Self {
-        let x = self.x / a.x;
-        let y = self.y / a.y;
-
-        Vector2 { x, y }
+    fn div(self, other: Self) -> Self {
+        Vector2 {
+            x: self.x / other.x,
+            y: self.y / other.y,
+        }
     }
 }
 
 impl Mul<Vector2> for Vector2 {
     type Output = Self;
-    fn mul(self, a: Self) -> Self {
-        let x = self.x * a.x;
-        let y = self.y * a.y;
-
-        Vector2 { x, y }
+    fn mul(self, other: Self) -> Self {
+        Vector2 {
+            x: self.x * other.x,
+            y: self.y * other.y,
+        }
     }
 }
 
 impl Mul<f64> for Vector2 {
     type Output = Self;
-    fn mul(self, a: f64) -> Self {
-        let x = self.x * a;
-        let y = self.y * a;
-
-        Vector2 { x, y }
+    fn mul(self, other: f64) -> Self {
+        Vector2 {
+            x: self.x * other,
+            y: self.y * other,
+        }
     }
 }
 
 impl Sub<Vector2> for Vector2 {
     type Output = Self;
-    fn sub(self, a: Self) -> Self {
-        let x = self.x - a.x;
-        let y = self.y - a.y;
-
-        Vector2 { x, y }
+    fn sub(self, other: Self) -> Self {
+        Vector2 {
+            x: self.x - other.x,
+            y: self.y - other.y,
+        }
     }
 }
 
 impl Add<Vector2> for Vector2 {
     type Output = Self;
-    fn add(self, a: Self) -> Self {
-        let x = self.x + a.x;
-        let y = self.y + a.y;
-
-        Vector2 { x, y }
+    fn add(self, other: Self) -> Self {
+        Vector2 {
+            x: self.x + other.x,
+            y: self.y + other.y,
+        }
     }
 }
 
