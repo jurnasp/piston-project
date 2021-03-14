@@ -1,6 +1,7 @@
 pub mod color {
     pub const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
     pub const GREY: [f32; 4] = [0.25, 0.25, 0.25, 0.0];
+    pub const DEBUG: [f32; 4] = [1.0, 0.0, 0.0, 0.5];
 }
 
 pub mod window {

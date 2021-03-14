@@ -3,10 +3,13 @@ extern crate graphics;
 extern crate opengl_graphics;
 extern crate piston;
 
+mod collider;
+mod collides;
 mod player;
 mod settings;
 mod vector2;
 
+use crate::collides::Collides;
 use crate::settings::color;
 use glutin_window::GlutinWindow as Window;
 use graphics::clear;
@@ -70,6 +73,7 @@ fn main() {
                 // Clear the screen.
                 clear(color::GREY, gl);
                 player.draw(c, gl);
+                player.get_collider().draw_debug(c, gl);
             });
         }
 

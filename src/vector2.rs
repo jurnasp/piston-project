@@ -1,7 +1,7 @@
 use std::cmp::PartialEq;
 use std::ops::{Add, Div, Mul, Sub};
 
-#[derive(Clone, Copy, Default, Debug)]
+#[derive(Clone, Copy, Debug)]
 pub struct Vector2 {
     pub x: f64,
     pub y: f64,
