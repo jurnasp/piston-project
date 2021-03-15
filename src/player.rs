@@ -8,7 +8,7 @@ use crate::settings;
 use crate::settings::{color, player};
 use crate::vector2::Vector2;
 use opengl_graphics::GlGraphics;
-use piston_window::*;
+use piston_window::{ellipse, Context};
 
 #[derive(Clone, Copy)]
 pub enum KeyState {
@@ -116,8 +116,8 @@ impl Player {
                 let rect = [
                     self.collider.position.x - player::SIZE,
                     self.collider.position.y - player::SIZE,
-                    player::SIZE,
-                    player::SIZE,
+                    player::SIZE * 2.0,
+                    player::SIZE * 2.0,
                 ];
 
                 ellipse(color::WHITE, rect, c.transform, g);

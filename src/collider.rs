@@ -16,6 +16,17 @@ pub struct Collider {
 }
 
 impl Collider {
+    pub fn new(position: Vector2, radius: f64) -> Self {
+        if radius <= 0.0 {
+            panic!("Radius of collider must be greater than 0");
+        }
+        Collider {
+            state: ColliderState::Enabled,
+            position,
+            radius,
+        }
+    }
+
     pub(crate) fn collides_with(&self, other: &Collider) -> bool {
         match (self.state, other.state) {
             (ColliderState::Enabled, ColliderState::Enabled) => {
@@ -35,16 +46,6 @@ impl Collider {
     fn enable(&mut self) {
         self.state = ColliderState::Enabled
     }
-    pub fn new(position: Vector2, radius: f64) -> Self {
-        if radius <= 0.0 {
-            panic!("Radius of collider must be greater than 0");
-        }
-        Collider {
-            state: ColliderState::Enabled,
-            position,
-            radius,
-        }
-    }
 
     pub fn draw_debug(&self, c: piston_window::Context, g: &mut GlGraphics) {
         match self.state {
@@ -52,8 +53,8 @@ impl Collider {
                 let rect = [
                     self.position.x - self.radius,
                     self.position.y - self.radius,
-                    self.radius,
-                    self.radius,
+                    self.radius * 2.0,
+                    self.radius * 2.0,
                 ];
                 ellipse(settings::color::DEBUG, rect, c.transform, g);
             }

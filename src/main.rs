@@ -3,12 +3,14 @@ extern crate graphics;
 extern crate opengl_graphics;
 extern crate piston;
 
+mod chaser;
 mod collider;
 mod collides;
 mod player;
 mod settings;
 mod vector2;
 
+use crate::chaser::Chaser;
 use crate::collides::Collides;
 use crate::settings::color;
 use glutin_window::GlutinWindow as Window;
@@ -37,6 +39,7 @@ fn main() {
     // Create a new game and run it.
     let mut gl = GlGraphics::new(opengl);
     let mut player = Player::new(Vector2::new(width as f64 / 2.0, height as f64 / 2.0));
+    let mut chaser = Chaser::new(Vector2::new(0.0, 0.0));
 
     // Key state
     let mut up_key = KeyState::NotPressed;
@@ -46,6 +49,17 @@ fn main() {
 
     let mut events = Events::new(EventSettings::new());
     while let Some(e) = events.next(&mut window) {
+        if let Some(args) = e.render_args() {
+            gl.draw(args.viewport(), |c, gl| {
+                // Clear the screen.
+                clear(color::GREY, gl);
+
+                chaser.draw(c, gl);
+
+                player.draw(c, gl);
+            });
+        }
+
         if let Some(press_args) = e.press_args() {
             match press_args {
                 Keyboard(Key::W) => up_key = KeyState::Pressed,
@@ -68,17 +82,9 @@ fn main() {
             player.input(left_key, right_key, up_key, down_key);
         }
 
-        if let Some(args) = e.render_args() {
-            gl.draw(args.viewport(), |c, gl| {
-                // Clear the screen.
-                clear(color::GREY, gl);
-                player.draw(c, gl);
-                player.get_collider().draw_debug(c, gl);
-            });
-        }
-
         if let Some(args) = e.update_args() {
             player.update(args.dt);
+            chaser.update(args.dt, player.get_collider().position);
         }
     }
 }
