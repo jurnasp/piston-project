@@ -1,5 +1,5 @@
 use crate::collider::Collider;
-use crate::collides::Collides;
+use crate::collides::{Collides, Position};
 use crate::settings;
 use crate::vector2::Vector2;
 use opengl_graphics::GlGraphics;
@@ -10,12 +10,22 @@ pub struct Chaser {
 }
 
 impl Collides for Chaser {
-    fn collides_with<C: Collides>(&self, other: &C) -> bool {
+    fn collides_with<C: Collides>(&self, other: &mut C) -> bool {
         self.collider.collides_with(other.get_collider())
     }
 
-    fn get_collider(&self) -> &Collider {
-        &self.collider
+    fn get_collider(&mut self) -> &mut Collider {
+        &mut self.collider
+    }
+}
+
+impl Position for Chaser {
+    fn set_position(&mut self, position: Vector2) {
+        self.get_collider().set_position(position)
+    }
+
+    fn get_position(&mut self) -> Vector2 {
+        self.get_collider().get_position()
     }
 }
 
@@ -27,21 +37,23 @@ impl Chaser {
     }
 
     pub fn update(&mut self, dt: f64, target_position: Vector2) {
-        if self.collider.position == target_position {
+        let position = self.get_position();
+        if position == target_position {
             return;
         }
 
-        self.collider.position = Vector2::move_towards(
-            self.collider.position,
+        self.set_position(Vector2::move_towards(
+            position,
             target_position,
             settings::chaser::SPEED * dt,
-        );
+        ));
     }
 
     pub fn draw(&mut self, c: Context, g: &mut GlGraphics) {
+        let position = self.get_position();
         let rect = [
-            self.collider.position.x - settings::chaser::SIZE,
-            self.collider.position.y - settings::chaser::SIZE,
+            position.x - settings::chaser::SIZE,
+            position.y - settings::chaser::SIZE,
             settings::chaser::SIZE * 2.0,
             settings::chaser::SIZE * 2.0,
         ];

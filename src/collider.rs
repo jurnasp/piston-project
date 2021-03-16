@@ -11,7 +11,7 @@ enum ColliderState {
 
 pub struct Collider {
     state: ColliderState,
-    pub position: Vector2,
+    position: Vector2,
     radius: f64,
 }
 
@@ -60,6 +60,14 @@ impl Collider {
             }
             ColliderState::Disabled => {}
         }
+    }
+
+    pub fn get_position(&self) -> Vector2 {
+        self.position
+    }
+
+    pub fn set_position(&mut self, position: Vector2) {
+        self.position = position
     }
 }
 

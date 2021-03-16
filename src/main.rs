@@ -7,11 +7,12 @@ mod chaser;
 mod collider;
 mod collides;
 mod player;
+mod position;
 mod settings;
 mod vector2;
 
 use crate::chaser::Chaser;
-use crate::collides::Collides;
+use crate::collides::{Collides, Position};
 use crate::settings::color;
 use glutin_window::GlutinWindow as Window;
 use graphics::clear;
@@ -84,7 +85,7 @@ fn main() {
 
         if let Some(args) = e.update_args() {
             player.update(args.dt);
-            chaser.update(args.dt, player.get_collider().position);
+            chaser.update(args.dt, player.get_position());
         }
     }
 }

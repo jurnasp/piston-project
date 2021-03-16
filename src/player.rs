@@ -1,7 +1,7 @@
 extern crate piston_window;
 
 use crate::collider::Collider;
-use crate::collides::Collides;
+use crate::collides::{Collides, Position};
 use crate::player::Action::NoMove;
 use crate::player::State::Active;
 use crate::settings;
@@ -35,12 +35,22 @@ pub struct Player {
 }
 
 impl Collides for Player {
-    fn collides_with<C: Collides>(&self, other: &C) -> bool {
+    fn collides_with<C: Collides>(&self, other: &mut C) -> bool {
         self.collider.collides_with(other.get_collider())
     }
 
-    fn get_collider(&self) -> &Collider {
-        &self.collider
+    fn get_collider(&mut self) -> &mut Collider {
+        &mut self.collider
+    }
+}
+
+impl Position for Player {
+    fn set_position(&mut self, position: Vector2) {
+        self.get_collider().set_position(position)
+    }
+
+    fn get_position(&mut self) -> Vector2 {
+        self.get_collider().get_position()
     }
 }
 
@@ -55,25 +65,29 @@ impl Player {
 
     pub fn update(&mut self, dt: f64) {
         let mut target = Vector2::new(0.0, 0.0);
+        let current_position = self.get_position();
         match &self.horizontal {
             State::Active(action) => match action {
-                Action::Minus => target.x = self.collider.position.x - player::SPEED * dt,
-                Action::Plus => target.x = self.collider.position.x + player::SPEED * dt,
-                Action::NoMove => target.x = self.collider.position.x,
+                Action::Minus => target.x = current_position.x - player::SPEED * dt,
+                Action::Plus => target.x = current_position.x + player::SPEED * dt,
+                Action::NoMove => target.x = current_position.x,
             },
             _ => {}
         }
         match &self.vertical {
             State::Active(action) => match action {
-                Action::Minus => target.y = self.collider.position.y + player::SPEED * dt,
-                Action::Plus => target.y = self.collider.position.y - player::SPEED * dt,
-                Action::NoMove => target.y = self.collider.position.y,
+                Action::Minus => target.y = current_position.y + player::SPEED * dt,
+                Action::Plus => target.y = current_position.y - player::SPEED * dt,
+                Action::NoMove => target.y = current_position.y,
             },
             _ => {}
         }
-        if self.collider.position != target {
-            self.collider.position =
-                Vector2::move_towards(self.collider.position, target, settings::player::SPEED * dt);
+        if current_position != target {
+            self.set_position(Vector2::move_towards(
+                current_position,
+                target,
+                settings::player::SPEED * dt,
+            ));
         }
     }
 
@@ -107,6 +121,7 @@ impl Player {
     pub fn draw(&mut self, c: Context, g: &mut GlGraphics) {
         match &self.horizontal {
             State::Active(_action) => {
+                let position = self.get_position();
                 // let square = rectangle::square(0.0, 0.0, player::SIZE);
                 //
                 // let (x, y) = (self.collider.position.x, self.collider.position.y);
@@ -114,8 +129,8 @@ impl Player {
                 //
                 // rectangle(color::WHITE, square, transform, g);
                 let rect = [
-                    self.collider.position.x - player::SIZE,
-                    self.collider.position.y - player::SIZE,
+                    position.x - player::SIZE,
+                    position.y - player::SIZE,
                     player::SIZE * 2.0,
                     player::SIZE * 2.0,
                 ];
