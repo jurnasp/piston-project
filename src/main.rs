@@ -12,7 +12,8 @@ mod settings;
 mod vector2;
 
 use crate::chaser::Chaser;
-use crate::collides::{Collides, Position};
+use crate::collides::Collides;
+use crate::position::Position;
 use crate::settings::color;
 use glutin_window::GlutinWindow as Window;
 use graphics::clear;

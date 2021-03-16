@@ -1,5 +1,6 @@
 use crate::collider::Collider;
-use crate::collides::{Collides, Position};
+use crate::collides::Collides;
+use crate::position::Position;
 use crate::settings;
 use crate::vector2::Vector2;
 use opengl_graphics::GlGraphics;

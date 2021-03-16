@@ -1,9 +1,10 @@
 extern crate piston_window;
 
 use crate::collider::Collider;
-use crate::collides::{Collides, Position};
+use crate::collides::Collides;
 use crate::player::Action::NoMove;
 use crate::player::State::Active;
+use crate::position::Position;
 use crate::settings;
 use crate::settings::{color, player};
 use crate::vector2::Vector2;
