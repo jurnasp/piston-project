@@ -87,6 +87,11 @@ fn main() {
         if let Some(args) = e.update_args() {
             player.update(args.dt);
             chaser.update(args.dt, player.get_position());
+            if player.collides_with(&mut chaser) {
+                player.damage();
+            } else {
+                player.normal();
+            }
         }
     }
 }

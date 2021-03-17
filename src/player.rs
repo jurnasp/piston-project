@@ -33,6 +33,7 @@ pub struct Player {
     pub collider: Collider,
     horizontal: State,
     vertical: State,
+    pub(crate) color: [f32; 4],
 }
 
 impl Collides for Player {
@@ -61,6 +62,7 @@ impl Player {
             collider: Collider::new(position, settings::player::SIZE),
             horizontal: Active(NoMove),
             vertical: Active(NoMove),
+            color: settings::color::WHITE,
         }
     }
 
@@ -136,9 +138,17 @@ impl Player {
                     player::SIZE * 2.0,
                 ];
 
-                ellipse(color::WHITE, rect, c.transform, g);
+                ellipse(self.color, rect, c.transform, g);
             }
             State::Dead => {}
         }
+    }
+
+    pub fn damage(&mut self) {
+        self.color[3] = 0.25
+    }
+
+    pub fn normal(&mut self) {
+        self.color[3] = 1.0
     }
 }
