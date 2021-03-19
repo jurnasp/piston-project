@@ -11,10 +11,6 @@ pub struct Chaser {
 }
 
 impl Collides for Chaser {
-    fn collides_with<C: Collides>(&self, other: &mut C) -> bool {
-        self.collider.collides_with(other.get_collider())
-    }
-
     fn get_collider(&mut self) -> &mut Collider {
         &mut self.collider
     }

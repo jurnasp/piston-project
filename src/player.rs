@@ -37,10 +37,6 @@ pub struct Player {
 }
 
 impl Collides for Player {
-    fn collides_with<C: Collides>(&self, other: &mut C) -> bool {
-        self.collider.collides_with(other.get_collider())
-    }
-
     fn get_collider(&mut self) -> &mut Collider {
         &mut self.collider
     }
