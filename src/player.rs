@@ -6,7 +6,7 @@ use crate::player::Action::NoMove;
 use crate::player::State::Active;
 use crate::position::Position;
 use crate::settings;
-use crate::settings::{color, player};
+use crate::settings::player;
 use crate::vector2::Vector2;
 use opengl_graphics::GlGraphics;
 use piston_window::{ellipse, Context};
